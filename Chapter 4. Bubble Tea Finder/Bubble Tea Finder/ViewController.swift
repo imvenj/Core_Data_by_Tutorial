@@ -21,6 +21,7 @@
  */
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController {
 
@@ -28,7 +29,12 @@ class ViewController: UIViewController {
   private let filterViewControllerSegueIdentifier = "toFilterViewController"
   fileprivate let venueCellIdentifier = "VenueCell"
 
+  var fetchRequest: NSFetchRequest<Venue>?
+  var venues:[Venue] = []
+
   var coreDataStack: CoreDataStack!
+
+  var asyncFetchRequest: NSAsynchronousFetchRequest<Venue>?
 
   // MARK: - IBOutlets
   @IBOutlet weak var tableView: UITableView!
@@ -36,12 +42,59 @@ class ViewController: UIViewController {
   // MARK: - View Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    let batchUpdate = NSBatchUpdateRequest(entityName: "Venue")
+    batchUpdate.propertiesToUpdate = [#keyPath(Venue.favorite):true]
+    batchUpdate.affectedStores = coreDataStack.managedContext.persistentStoreCoordinator?.persistentStores
+    batchUpdate.resultType = .updatedObjectsCountResultType
+
+    do {
+      let batchResult = try coreDataStack.managedContext.execute(batchUpdate) as! NSBatchUpdateResult
+      print("\(batchResult.result!) records updated.")
+    } catch let error as NSError {
+      print("Error batch update: \(error), \(error.userInfo)")
+    }
+
+    let fetchRequest: NSFetchRequest<Venue> = Venue.fetchRequest()
+    self.fetchRequest = fetchRequest
+
+    let asyncFetchRequest = NSAsynchronousFetchRequest<Venue>(fetchRequest: fetchRequest, completionBlock: { [weak self]  (results) in
+      guard let `self` = self else { return }
+      guard let venues = results.finalResult else { return }
+
+      self.venues = venues
+      self.tableView.reloadData()
+    })
+
+    self.asyncFetchRequest = asyncFetchRequest
+
+    do {
+      try coreDataStack.managedContext.execute(asyncFetchRequest)
+    } catch let error as NSError {
+      print("Error async fetch: \(error), \(error.userInfo)")
+    }
+
+    //fetchAndReload()
   }
 
   // MARK: - Navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == filterViewControllerSegueIdentifier {
-      
+      guard let nav = segue.destination as? UINavigationController,
+            let filterViewController = nav.topViewController as? FilterViewController else { return }
+      filterViewController.delegate = self
+    }
+  }
+}
+
+extension ViewController {
+  func fetchAndReload() {
+    guard let fetchRequest = fetchRequest else { return }
+    do {
+      venues = try coreDataStack.managedContext.fetch(fetchRequest)
+      tableView.reloadData()
+    } catch let error as NSError {
+      print("Failed to fetch venues: \(error), \(error.userInfo)")
     }
   }
 }
@@ -57,13 +110,25 @@ extension ViewController {
 extension ViewController: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+    return venues.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: venueCellIdentifier, for: indexPath)
-    cell.textLabel?.text = "Bubble Tea Venue"
-    cell.detailTextLabel?.text = "Price Info"
+    let venue = venues[indexPath.row]
+    cell.textLabel?.text = venue.name
+    cell.detailTextLabel?.text = venue.priceInfo?.priceCategory
     return cell
+  }
+}
+
+extension ViewController: FilterViewControllerDelegate {
+  func filterViewController(filter: FilterViewController, didSelectPredicate predicate: NSPredicate?, sortDiscriptor: NSSortDescriptor?) {
+    fetchRequest?.predicate = predicate
+    fetchRequest?.sortDescriptors = nil
+    if let sortDiscriptor = sortDiscriptor {
+      fetchRequest?.sortDescriptors = [sortDiscriptor]
+    }
+    fetchAndReload()
   }
 }

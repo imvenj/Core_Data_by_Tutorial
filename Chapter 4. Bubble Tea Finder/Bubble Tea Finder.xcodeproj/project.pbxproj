@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		251704C51FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 251704C31FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodeld */; };
 		FE81048C1D73C28200852759 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE81048B1D73C28200852759 /* FilterViewController.swift */; };
 		FEE9F25B1D73B9520042F5B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE9F25A1D73B9520042F5B5 /* AppDelegate.swift */; };
 		FEE9F25D1D73B9520042F5B5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE9F25C1D73B9520042F5B5 /* ViewController.swift */; };
-		FEE9F2631D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEE9F2611D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodeld */; };
 		FEE9F2651D73B9520042F5B5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEE9F2641D73B9520042F5B5 /* Assets.xcassets */; };
 		FEE9F2681D73B9520042F5B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEE9F2661D73B9520042F5B5 /* LaunchScreen.storyboard */; };
 		FEE9F27A1D73BBFC0042F5B5 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE9F2701D73BBFC0042F5B5 /* Category+CoreDataClass.swift */; };
@@ -30,11 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		251704C41FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bubble_Tea_Finder.xcdatamodel; sourceTree = "<group>"; };
 		FE81048B1D73C28200852759 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		FEE9F2571D73B9520042F5B5 /* Bubble Tea Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bubble Tea Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEE9F25A1D73B9520042F5B5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FEE9F25C1D73B9520042F5B5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FEE9F2621D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bubble_Tea_Finder.xcdatamodel; sourceTree = "<group>"; };
 		FEE9F2641D73B9520042F5B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FEE9F2671D73B9520042F5B5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FEE9F2691D73B9520042F5B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,12 +92,12 @@
 				FE81048B1D73C28200852759 /* FilterViewController.swift */,
 				FEE9F2861D73C15F0042F5B5 /* seed.json */,
 				FEE9F2881D73C1750042F5B5 /* attribution.txt */,
+				251704C31FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodeld */,
 				FEF42F5E1D73CD2400CE2FB3 /* Main.storyboard */,
 				FEE9F26F1D73BBBC0042F5B5 /* NSManagedObject */,
 				FEE9F2641D73B9520042F5B5 /* Assets.xcassets */,
 				FEE9F2661D73B9520042F5B5 /* LaunchScreen.storyboard */,
 				FEE9F2691D73B9520042F5B5 /* Info.plist */,
-				FEE9F2611D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodeld */,
 			);
 			path = "Bubble Tea Finder";
 			sourceTree = "<group>";
@@ -205,10 +205,10 @@
 				FEE9F27B1D73BBFC0042F5B5 /* Category+CoreDataProperties.swift in Sources */,
 				FE81048C1D73C28200852759 /* FilterViewController.swift in Sources */,
 				FEE9F25B1D73B9520042F5B5 /* AppDelegate.swift in Sources */,
-				FEE9F2631D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodeld in Sources */,
 				FEE9F2801D73BBFC0042F5B5 /* Location+CoreDataClass.swift in Sources */,
 				FEE9F27C1D73BBFC0042F5B5 /* Stats+CoreDataClass.swift in Sources */,
 				FEE9F2821D73BBFC0042F5B5 /* PriceInfo+CoreDataClass.swift in Sources */,
+				251704C51FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,12 +381,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		FEE9F2611D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodeld */ = {
+		251704C31FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FEE9F2621D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodel */,
+				251704C41FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodel */,
 			);
-			currentVersion = FEE9F2621D73B9520042F5B5 /* Bubble_Tea_Finder.xcdatamodel */;
+			currentVersion = 251704C41FE7F6D900A51DE6 /* Bubble_Tea_Finder.xcdatamodel */;
 			path = Bubble_Tea_Finder.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

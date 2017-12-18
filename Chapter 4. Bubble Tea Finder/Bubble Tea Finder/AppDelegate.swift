@@ -28,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   lazy var  coreDataStack = CoreDataStack(modelName: "Bubble_Tea_Finder")
+  static let shared: AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
