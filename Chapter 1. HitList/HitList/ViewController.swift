@@ -12,7 +12,7 @@ import CoreData
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var persons: [NSManagedObject] = []
+    var people: [Person] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +21,9 @@ class ViewController: UIViewController {
 
         let ad = UIApplication.shared.delegate as! AppDelegate
         let context = ad.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Person")
+        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
         do {
-            persons = try context.fetch(fetchRequest)
+            people = try context.fetch(fetchRequest)
         } catch let error {
             print(error.localizedDescription)
         }
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
             guard let `self` = self else { return }
             let name = alert.textFields?.first?.text ?? "Anonymous"
             self.save(name: name)
-            let indexPath = IndexPath(row: self.persons.count - 1, section: 0)
+            let indexPath = IndexPath(row: self.people.count - 1, section: 0)
             self.tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -56,9 +56,9 @@ class ViewController: UIViewController {
         let ad = UIApplication.shared.delegate as! AppDelegate
         let context = ad.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Person", in: context)!
-        let person = NSManagedObject(entity: entity, insertInto: context)
-        person.setValue(name, forKey: "name")
-        persons.append(person)
+        let person = Person(entity: entity, insertInto: context)
+        person.name = name
+        people.append(person)
         ad.saveContext()
     }
 }
@@ -69,13 +69,13 @@ extension ViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return persons.count
+        return people.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        cell.textLabel?.text = persons[indexPath.row].value(forKey: "name") as? String
+        cell.textLabel?.text = people[indexPath.row].name
         return cell
     }
 
