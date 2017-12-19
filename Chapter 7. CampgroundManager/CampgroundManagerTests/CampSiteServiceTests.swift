@@ -61,5 +61,46 @@ class CampSiteServiceTests: XCTestCase {
         XCTAssertNil(campSite, "No camp site should be returned.")
     }
 
+    func testDeleteCampSiteWithMatchingSiteNumber() {
+        _ = campSiteService.addCampSite(1, electricity: true, water: true)
+        campSiteService.deleteCampSite(1)
+        let campSite = campSiteService.getCampSite(1)
+        XCTAssertNil(campSite, "Camp site should be deleted.")
+    }
+
+    func testDeleteCampSiteWithNoMatchingSiteNumber() {
+        _ = campSiteService.addCampSite(1, electricity: true, water: true)
+        campSiteService.deleteCampSite(2)
+        let campSite = campSiteService.getCampSite(1)
+        XCTAssertNotNil(campSite, "Camp site should not be deleted.")
+    }
+
+    func testGetCampSites() {
+        (1...10).forEach {
+            _ = campSiteService.addCampSite(NSNumber(value: $0), electricity: true, water: true)
+        }
+
+        let campSites = campSiteService.getCampSites()
+        XCTAssertTrue(campSites.count == 10, "There should be 10 camp sites.")
+    }
+
+    func testGetNoCampSites() {
+        let campSites = campSiteService.getCampSites()
+        XCTAssertTrue(campSites.count == 0, "There should no camp site at all.")
+    }
+
+    func testGetNextSiteNumberWithCampSites() {
+        (1...2).forEach {
+            _ = campSiteService.addCampSite(NSNumber(value: $0), electricity: true, water: true)
+        }
+        let nextCampSiteNumber = campSiteService.getNextCampSiteNumber()
+        XCTAssertTrue(nextCampSiteNumber == 3, "The next campsite should be 3.")
+    }
+
+    func testGetNextSiteNumberWithNoCampSite() {
+        let nextCampSiteNumber = campSiteService.getNextCampSiteNumber()
+        XCTAssertTrue(nextCampSiteNumber == 1, "There should be no more camp sites.")
+    }
+
 
 }

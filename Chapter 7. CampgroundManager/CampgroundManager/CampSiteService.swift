@@ -51,7 +51,9 @@ extension CampSiteService {
   }
   
   public func deleteCampSite(_ siteNumber: NSNumber) {
-    // TODO : Not yet implemented
+    if let campSite = getCampSite(siteNumber) {
+        managedObjectContext.delete(campSite)
+    }
   }
   
   public func getCampSite(_ siteNumber: NSNumber) -> CampSite? {
@@ -68,14 +70,26 @@ extension CampSiteService {
   }
   
   public func getCampSites() -> [CampSite] {
-    // TODO : Not yet implemented
-    
-    return []
+    let fetchRequest: NSFetchRequest<CampSite> = CampSite.fetchRequest()
+    let sortDescriptor = NSSortDescriptor(key: #keyPath(CampSite.siteNumber), ascending: true)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+
+    do {
+        let campSites = try managedObjectContext.fetch(fetchRequest)
+
+        return campSites
+    } catch {
+        return []
+    }
   }
   
   public func getNextCampSiteNumber() -> NSNumber {
-    // TODO : Not yet implemented
-    
-    return -1
+    let sites = getCampSites()
+    if let siteNumber = sites.last?.siteNumber {
+        return NSNumber(value: siteNumber.intValue + 1)
+    }
+    else {
+        return 1
+    }
   }
 }
