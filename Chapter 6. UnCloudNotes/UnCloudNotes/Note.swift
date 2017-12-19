@@ -29,8 +29,19 @@ class Note: NSManagedObject {
   @NSManaged var body: String
   @NSManaged var dateCreated: Date!
   @NSManaged var displayIndex: NSNumber!
-  @NSManaged var image: UIImage?
-  
+  @NSManaged var attachments: Set<Attachment>?
+
+  var image: UIImage?  {
+    return latestAttachment?.image
+  }
+
+  var latestAttachment: Attachment? {
+    guard let attachments = attachments else { return nil }
+    return Array(attachments).sorted(by: {
+      $0.dateCreated > $1.dateCreated
+    }).first
+  }
+
   override func awakeFromInsert() {
     super.awakeFromInsert()
     dateCreated = Date()
