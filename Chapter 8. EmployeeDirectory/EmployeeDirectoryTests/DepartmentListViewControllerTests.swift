@@ -26,4 +26,13 @@ import XCTest
 
 class DepartmentListViewControllerTests: XCTestCase {
 
+  func testTotalEmployeesFast() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentList = DepartmentListViewController()
+      departmentList.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentList.totalEmployeesPerDepartmentFast
+      self.stopMeasuring()
+    }
+  }
 }

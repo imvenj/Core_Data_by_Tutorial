@@ -27,9 +27,7 @@ import XCTest
 class DepartmentDetailsViewControllerTests: XCTestCase {
 
   func testTotalEmployeesFetchPerformance() {
-    measureMetrics([XCTPerformanceMetric.wallClockTime],
-                   automaticallyStartMeasuring: false) {
-
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
       let departmentDetails = DepartmentDetailsViewController()
       departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
       self.startMeasuring()
@@ -37,4 +35,55 @@ class DepartmentDetailsViewControllerTests: XCTestCase {
       self.stopMeasuring()
     }
   }
+
+  func testTotalEmployeesFetchPerformanceFast() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentDetails = DepartmentDetailsViewController()
+      departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentDetails.totalEmployeesFast("Engineering")
+      self.stopMeasuring()
+    }
+  }
+
+  func testGreaterThanVacationDays() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentDetails = DepartmentDetailsViewController()
+      departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentDetails.greaterThanVacationDays(15, department: "Engineering")
+      self.stopMeasuring()
+    }
+  }
+
+  func testGreaterThanVacationDaysFast() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentDetails = DepartmentDetailsViewController()
+      departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentDetails.greaterThanVacationDaysFast(15, department: "Engineering")
+      self.stopMeasuring()
+    }
+  }
+  
+  func testZeroVacationDays() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentDetails = DepartmentDetailsViewController()
+      departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentDetails.zeroVacationDays("Engineering")
+      self.stopMeasuring()
+    }
+  }
+
+  func testZeroVacationDaysFast() {
+    measureMetrics([XCTPerformanceMetric.wallClockTime], automaticallyStartMeasuring: false) {
+      let departmentDetails = DepartmentDetailsViewController()
+      departmentDetails.coreDataStack = CoreDataStack(modelName: "EmployeeDirectory")
+      self.startMeasuring()
+      _ = departmentDetails.zeroVacationDaysFast("Engineering")
+      self.stopMeasuring()
+    }
+  }
+
 }

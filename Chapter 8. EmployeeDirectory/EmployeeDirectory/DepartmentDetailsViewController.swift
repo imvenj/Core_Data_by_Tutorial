@@ -86,10 +86,22 @@ extension DepartmentDetailsViewController {
     }
   }
 
+  func totalEmployeesFast(_ department: String) -> String {
+    let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
+    fetchRequest.predicate = NSPredicate(format: "department == %@", department)
+
+    do {
+      let results = try coreDataStack.mainContext.count(for: fetchRequest)
+      return String(results)
+    } catch let error as NSError {
+      print("Error: \(error.localizedDescription)")
+      return "0"
+    }
+  }
+
   func activeEmployees(_ department: String) -> String {
     let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
-    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (active == YES)",
-                                       department)
+    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (active == YES)", department)
 
     do {
       let results = try coreDataStack.mainContext.fetch(fetchRequest)
@@ -102,12 +114,24 @@ extension DepartmentDetailsViewController {
 
   func greaterThanVacationDays(_ vacationDays: Int, department: String) -> String {
     let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
-    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays > %i)",
-                                       department, vacationDays)
+    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays > %i)", department, vacationDays)
 
     do {
       let results = try coreDataStack.mainContext.fetch(fetchRequest)
       return String(results.count)
+    } catch let error as NSError {
+      print("Error: \(error.localizedDescription)")
+      return "0"
+    }
+  }
+
+  func greaterThanVacationDaysFast(_ vacationDays: Int, department: String) -> String {
+    let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
+    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays > %i)", department, vacationDays)
+
+    do {
+      let results = try coreDataStack.mainContext.count(for: fetchRequest)
+      return String(results)
     } catch let error as NSError {
       print("Error: \(error.localizedDescription)")
       return "0"
@@ -116,8 +140,7 @@ extension DepartmentDetailsViewController {
 
   func zeroVacationDays(_ department: String) -> String {
     let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
-    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays == 0)",
-                                       department)
+    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays == 0)", department)
 
     do {
       let results = try coreDataStack.mainContext.fetch(fetchRequest)
@@ -127,4 +150,18 @@ extension DepartmentDetailsViewController {
       return "0"
     }
   }
+
+  func zeroVacationDaysFast(_ department: String) -> String {
+    let fetchRequest: NSFetchRequest<Employee> = NSFetchRequest(entityName: "Employee")
+    fetchRequest.predicate = NSPredicate(format: "(department == %@) AND (vacationDays == 0)", department)
+
+    do {
+      let results = try coreDataStack.mainContext.count(for: fetchRequest)
+      return String(results)
+    } catch let error as NSError {
+      print("Error: \(error.localizedDescription)")
+      return "0"
+    }
+  }
+
 }

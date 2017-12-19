@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A25874019772CB500B91160 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A25873F19772CB500B91160 /* Employee.swift */; };
 		4A2587421977357C00B91160 /* EmployeeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2587411977357C00B91160 /* EmployeeTableViewCell.swift */; };
 		4A258744197737E300B91160 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A258743197737E300B91160 /* Main.storyboard */; };
 		4A2587461977391C00B91160 /* seed.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A2587451977391C00B91160 /* seed.json */; };
@@ -33,7 +32,6 @@
 		4AE8D61D1979781F00C89ECA /* EmployeeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8D61C1979781F00C89ECA /* EmployeeDetailViewController.swift */; };
 		4AF86F031978BD81005BE4F8 /* DepartmentListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF86F021978BD81005BE4F8 /* DepartmentListViewControllerTests.swift */; };
 		4AFF39C1197DD47D00827FD3 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF39C0197DD47D00827FD3 /* CoreDataStack.swift */; };
-		7969AA55198BFFD900E218AD /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7969AA54198BFFD900E218AD /* Sale.swift */; };
 		7969AA57198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7969AA56198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,7 +74,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4A25873F19772CB500B91160 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; tabWidth = 2; };
 		4A2587411977357C00B91160 /* EmployeeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = EmployeeTableViewCell.swift; sourceTree = "<group>"; tabWidth = 2; };
 		4A258743197737E300B91160 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4A2587451977391C00B91160 /* seed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seed.json; sourceTree = "<group>"; };
@@ -106,7 +103,6 @@
 		4AE8D61C1979781F00C89ECA /* EmployeeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = EmployeeDetailViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		4AF86F021978BD81005BE4F8 /* DepartmentListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = DepartmentListViewControllerTests.swift; sourceTree = "<group>"; tabWidth = 2; };
 		4AFF39C0197DD47D00827FD3 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; tabWidth = 2; };
-		7969AA54198BFFD900E218AD /* Sale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sale.swift; sourceTree = "<group>"; };
 		7969AA56198CDE0000E218AD /* EmployeeDetailViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmployeeDetailViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -162,8 +158,6 @@
 				4ADB0843197878CC0058081F /* DepartmentListViewController.swift */,
 				4ADB5E531979CDB800F6323D /* DepartmentDetailsViewController.swift */,
 				4A68F22119772956005A0865 /* EmployeeDirectory.xcdatamodeld */,
-				4A25873F19772CB500B91160 /* Employee.swift */,
-				7969AA54198BFFD900E218AD /* Sale.swift */,
 				4A2587451977391C00B91160 /* seed.json */,
 				4A80737F1B362790008AB595 /* Launch Screen.storyboard */,
 				4AE8D5D719796F4B00C89ECA /* faces */,
@@ -337,8 +331,6 @@
 				4A68F22519772956005A0865 /* EmployeeListViewController.swift in Sources */,
 				4ADB5E541979CDB800F6323D /* DepartmentDetailsViewController.swift in Sources */,
 				4ADB5E561979E01000F6323D /* EmployeePictureViewController.swift in Sources */,
-				7969AA55198BFFD900E218AD /* Sale.swift in Sources */,
-				4A25874019772CB500B91160 /* Employee.swift in Sources */,
 				4ADB0844197878CC0058081F /* DepartmentListViewController.swift in Sources */,
 				4AFF39C1197DD47D00827FD3 /* CoreDataStack.swift in Sources */,
 				4A68F22019772956005A0865 /* AppDelegate.swift in Sources */,

@@ -33,7 +33,7 @@ class DepartmentListViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    items = totalEmployeesPerDepartment()
+    items = totalEmployeesPerDepartmentFast()
   }
 
   // MARK: Navigation
@@ -92,10 +92,10 @@ extension DepartmentListViewController {
     var uniqueDepartments: [String: Int] = [:]
     for employee in fetchResults {
       
-      if let employeeDepartmentCount = uniqueDepartments[employee.department] {
-        uniqueDepartments[employee.department] = employeeDepartmentCount + 1
+      if let employeeDepartmentCount = uniqueDepartments[employee.department!] {
+        uniqueDepartments[employee.department!] = employeeDepartmentCount + 1
       } else {
-        uniqueDepartments[employee.department] = 1
+        uniqueDepartments[employee.department!] = 1
       }
     }
 
@@ -112,7 +112,30 @@ extension DepartmentListViewController {
 
     return results
   }
+
+  func totalEmployeesPerDepartmentFast() -> [[String: String]] {
+    let expressionDescription = NSExpressionDescription()
+    expressionDescription.name = "headCount"
+
+    expressionDescription.expression = NSExpression(forFunction: "count:", arguments: [NSExpression(forKeyPath: #keyPath(Employee.department))])
+    let fetchRequest: NSFetchRequest<NSDictionary> = NSFetchRequest(entityName: "Employee")
+    fetchRequest.propertiesToFetch = ["department", expressionDescription]
+    fetchRequest.propertiesToGroupBy = ["department"]
+    fetchRequest.resultType = .dictionaryResultType
+
+    var fetchResults: [NSDictionary] = []
+
+    do {
+      fetchResults = try coreDataStack.mainContext.fetch(fetchRequest)
+    } catch let error as NSError {
+      print("Error: \(error), \(error.userInfo)")
+    }
+
+    return fetchResults as! [[String: String]]
+  }
+
 }
+
 
 // MARK: UITableViewDataSource
 extension DepartmentListViewController {
