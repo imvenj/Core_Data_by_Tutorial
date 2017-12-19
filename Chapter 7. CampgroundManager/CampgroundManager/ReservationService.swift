@@ -53,9 +53,14 @@ extension ReservationService {
     reservation.dateTo = toDate
     
     // Some complex logic here to determine if reservation is valid or if there are conflicts
-    let registrationError: NSError? = nil
-    
-    reservation.status = "Reserved"
+    var registrationError: NSError? = nil
+
+    if numberOfNights <= 0 {
+        reservation.status = "Invalid"
+        registrationError = NSError(domain: "CampingManager", code: 5, userInfo: ["Problem": "Invalid number of days"])
+    } else {
+        reservation.status = "Reserved"
+    }
     
     coreDataStack.saveContext(managedObjectContext)
     
