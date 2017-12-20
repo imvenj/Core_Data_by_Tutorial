@@ -52,8 +52,12 @@ class JournalListViewController: UITableViewController {
 
       let surfJournalEntry = fetchedResultsController.object(at: indexPath)
 
-      detailViewController.journalEntry = surfJournalEntry
-      detailViewController.context = surfJournalEntry.managedObjectContext
+      let childContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+      childContext.parent = surfJournalEntry.managedObjectContext
+      let childEntry = childContext.object(with: surfJournalEntry.objectID) as? JournalEntry
+
+      detailViewController.journalEntry = childEntry
+      detailViewController.context = childContext
       detailViewController.delegate = self
 
     } else if segue.identifier == "SegueListToDetailAdd" {
@@ -63,10 +67,12 @@ class JournalListViewController: UITableViewController {
           fatalError("Application storyboard mis-configuration")
       }
 
-      let newJournalEntry = JournalEntry(context: coreDataStack.mainContext)
+      let childContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+      childContext.parent = coreDataStack.mainContext
+      let newChildJournalEntry = JournalEntry(context: childContext)
 
-      detailViewController.journalEntry = newJournalEntry
-      detailViewController.context = newJournalEntry.managedObjectContext
+      detailViewController.journalEntry = newChildJournalEntry
+      detailViewController.context = childContext
       detailViewController.delegate = self
     }
   }
@@ -90,47 +96,51 @@ private extension JournalListViewController {
   func exportCSVFile() {
     navigationItem.leftBarButtonItem = activityIndicatorBarButtonItem()
 
-    let context = coreDataStack.mainContext
-    var results: [JournalEntry] = []
-    do {
-      results = try context.fetch(self.surfJournalFetchRequest())
-    } catch let error as NSError {
-      print("ERROR: \(error.localizedDescription)")
-    }
+    coreDataStack.storeContainer.performBackgroundTask { (context) in
+      var results: [JournalEntry] = []
+      do {
+        results = try context.fetch(self.surfJournalFetchRequest())
+      } catch let error as NSError {
+        print("ERROR: \(error.localizedDescription)")
+      }
+      let exportFilePath = NSTemporaryDirectory() + "export.csv"
+      let exportFileURL = URL(fileURLWithPath: exportFilePath)
+      FileManager.default.createFile(atPath: exportFilePath, contents: Data(), attributes: nil)
 
-    let exportFilePath = NSTemporaryDirectory() + "export.csv"
-    let exportFileURL = URL(fileURLWithPath: exportFilePath)
-    FileManager.default.createFile(atPath: exportFilePath, contents: Data(), attributes: nil)
-
-    let fileHandle: FileHandle?
-    do {
-      fileHandle = try FileHandle(forWritingTo: exportFileURL)
-    } catch let error as NSError {
-      print("ERROR: \(error.localizedDescription)")
-      fileHandle = nil
-    }
-
-    if let fileHandle = fileHandle {
-
-      for journalEntry in results {
-        fileHandle.seekToEndOfFile()
-        guard let csvData = journalEntry
-          .csv()
-          .data(using: .utf8, allowLossyConversion: false) else {
-            continue
-        }
-
-        fileHandle.write(csvData)
+      let fileHandle: FileHandle?
+      do {
+        fileHandle = try FileHandle(forWritingTo: exportFileURL)
+      } catch let error as NSError {
+        print("ERROR: \(error.localizedDescription)")
+        fileHandle = nil
       }
 
-      fileHandle.closeFile()
+      if let fileHandle = fileHandle {
 
-      print("Export Path: \(exportFilePath)")
-      self.navigationItem.leftBarButtonItem = self.exportBarButtonItem()
-      self.showExportFinishedAlertView(exportFilePath)
+        for journalEntry in results {
+          fileHandle.seekToEndOfFile()
+          guard let csvData = journalEntry
+            .csv()
+            .data(using: .utf8, allowLossyConversion: false) else {
+              continue
+          }
 
-    } else {
-      self.navigationItem.leftBarButtonItem = self.exportBarButtonItem()
+          fileHandle.write(csvData)
+        }
+
+        fileHandle.closeFile()
+
+        print("Export Path: \(exportFilePath)")
+        DispatchQueue.main.async {
+          self.navigationItem.leftBarButtonItem = self.exportBarButtonItem()
+          self.showExportFinishedAlertView(exportFilePath)
+        }
+
+      } else {
+        DispatchQueue.main.async {
+          self.navigationItem.leftBarButtonItem = self.exportBarButtonItem()
+        }
+      }
     }
   }
 
